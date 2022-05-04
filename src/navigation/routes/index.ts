@@ -5,5 +5,5 @@ export enum ScreenRoutes {
 
 export enum NavigatorRoutes {
     Main = 'MainScreen',
-    Starships = 'Starships',
+    Starships = 'StarshipsScreen',
 }

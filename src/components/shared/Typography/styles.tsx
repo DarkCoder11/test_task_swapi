@@ -48,8 +48,10 @@ export const StyledText = styled.Text<TypographyStyleProps>`
               return `color: ${theme.colors['empire-blue']}`;
           case 'crawl-yellow':
               return `color: ${theme.colors['crawl-yellow']}`;
+          case 'white':
+              return `color: ${theme.colors.white}`;
           default:
-              return `color: ${theme?.colors.background}`;
+              return `color: ${theme?.colors.white}`;
       }
   }}
 

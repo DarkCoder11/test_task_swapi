@@ -1,15 +1,11 @@
 import { StyleSheet } from 'react-native';
 
+import colors from 'src/theme/colors';
+
 export const styles = StyleSheet.create({
     tabBarStyle: {
-        height: 70,
-        shadowColor: '#000',
-        shadowOffset: {
-            width: 0,
-            height: 2,
-        },
-        shadowOpacity: 0.25,
-        shadowRadius: 3.84,
-        elevation: 5,
+        height: 60,
+        backgroundColor: colors.dark,
+        borderTopColor: 'transparent',
     },
 });

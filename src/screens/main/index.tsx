@@ -1,13 +1,12 @@
 import React from 'react';
-import { SafeAreaView } from 'react-native';
 
-import { Typography } from 'src/components';
+import { Typography, Wrapper } from 'src/components';
 
 const Main = () => {
     return (
-        <SafeAreaView>
+        <Wrapper>
             <Typography>Hey it is you main screen</Typography>
-        </SafeAreaView>
+        </Wrapper>
     );
 };
 

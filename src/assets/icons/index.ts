@@ -5,3 +5,4 @@ export { default as Home } from './navbar/home.svg';
 export { default as HomeRed } from './navbar/home_red.svg';
 
 //Navigation
+export { default as SpaceshipIcon } from './navbar/spaceship.svg';

@@ -6,7 +6,7 @@ import { getStarships } from 'src/services/api/starships';
 
 const Starships = () => {
     // const ref = React.useRef(null);
-    //
+
     // useScrollToTop(ref);
     const { data, fetchNextPage, hasNextPage, isLoading, isRefetching, refetch, isError } = useInfiniteQuery(
         'exampleState',
@@ -20,8 +20,6 @@ const Starships = () => {
             },
         },
     );
-
-    console.warn(data);
 
     // const dataList = useMemo(() => {
     //   return (
@@ -44,6 +42,7 @@ const Starships = () => {
     //     />
     //   );
     // }, [data?.pages, fetchNextPage, isRefetching, refetch]);
+
     return (
         <Wrapper>
             <Typography>Starships</Typography>
