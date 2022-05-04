@@ -4,6 +4,7 @@ import { useTheme } from 'styled-components/native';
 import { useNavigation } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
+import { IS_IOS } from 'src/constants/constants';
 import { Home, SpaceshipIcon } from 'src/assets/icons';
 
 import { styles } from './styles';
@@ -58,14 +59,14 @@ const TabIcon: React.FC = ({ children }) => {
     }, [addListener]);
 
     return (
-        <View style={{ alignItems: 'center', justifyContent: 'center', marginBottom: 20 }}>
+        <View style={{ alignItems: 'center', justifyContent: 'center', marginBottom: IS_IOS ? -10 : 10 }}>
             <Animated.View
                 style={{
-                    borderTopColor: theme.colors.white,
+                    width: 25,
                     borderTopWidth: 2.5,
-                    width: 50,
+                    marginBottom: IS_IOS ? 10 : 15,
                     opacity: borderTopOpacity.current,
-                    marginBottom: 10,
+                    borderTopColor: theme.colors.white,
                     transform: [{ scaleX: scaleX.current }],
                 }}
             />
