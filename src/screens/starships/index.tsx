@@ -1,8 +1,7 @@
 import React from 'react';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import { useInfiniteQuery } from 'react-query';
 
-import { Typography } from 'src/components';
+import { Typography, Wrapper } from 'src/components';
 import { getStarships } from 'src/services/api/starships';
 
 const Starships = () => {
@@ -46,9 +45,9 @@ const Starships = () => {
     //   );
     // }, [data?.pages, fetchNextPage, isRefetching, refetch]);
     return (
-        <SafeAreaView>
+        <Wrapper>
             <Typography>Starships</Typography>
-        </SafeAreaView>
+        </Wrapper>
     );
 };
 
