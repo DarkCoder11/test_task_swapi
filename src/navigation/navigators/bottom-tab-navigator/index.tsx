@@ -59,12 +59,12 @@ const TabIcon: React.FC = ({ children }) => {
     }, [addListener]);
 
     return (
-        <View style={{ alignItems: 'center', justifyContent: 'center', marginBottom: IS_IOS ? 0 : 10 }}>
+        <View style={{ alignItems: 'center', justifyContent: 'center' }}>
             <Animated.View
                 style={{
                     width: 25,
                     borderTopWidth: 2.5,
-                    marginBottom: IS_IOS ? 20 : 15,
+                    bottom: 10,
                     opacity: borderTopOpacity.current,
                     borderTopColor: theme.colors.white,
                     transform: [{ scaleX: scaleX.current }],

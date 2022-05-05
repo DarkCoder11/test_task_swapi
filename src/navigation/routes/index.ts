@@ -1,5 +1,6 @@
 export enum ScreenRoutes {
     Main = 'Main',
+    Starship = 'Starship',
     Starships = 'Starships',
 }
 

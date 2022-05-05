@@ -5,6 +5,7 @@ import { ActivityIndicator, FlatList, RefreshControl } from 'react-native';
 
 import { Flex, Typography, Wrapper } from 'src/components';
 import { getStarships } from 'src/services/api/starships';
+import { IS_IOS } from 'src/constants/constants';
 
 import { StarshipsView } from './views';
 
@@ -47,7 +48,7 @@ const Starships = () => {
             <Flex paddingString="10px">
                 <Typography type="h1">Starships</Typography>
             </Flex>
-            {isLoading ? <ActivityIndicator /> : <Flex marginString="0 0 133px 0">{dataList}</Flex>}
+            {isLoading ? <ActivityIndicator /> : <Flex marginString={`0 0 ${IS_IOS ? 100 : 133}px 0`}>{dataList}</Flex>}
             {!hasNextPage && !isLoading && (
                 <Typography type="label" textAlign="center">
                     You can't load more
