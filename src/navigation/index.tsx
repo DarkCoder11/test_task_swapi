@@ -9,7 +9,7 @@ const Navigation = () => {
     const theme = useTheme();
     return (
         <NavigationContainer>
-            <StatusBar showHideTransition="slide" backgroundColor={theme.colors.background} barStyle="dark-content" />
+            <StatusBar showHideTransition="slide" backgroundColor={theme.colors.background} barStyle="light-content" />
             <BottomTabNavigator />
         </NavigationContainer>
     );

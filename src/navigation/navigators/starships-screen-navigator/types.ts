@@ -2,6 +2,8 @@ import { StackNavigationProp } from '@react-navigation/stack';
 
 import { ScreenRoutes } from 'src/navigation/routes';
 
-import { MainParamsList } from '../bottom-tab-navigator/types';
+export type StarshipParamsList = {
+    [ScreenRoutes.Starship]: { id: string; uri: string };
+};
 
-export type StarshipsScreenScreenNavigatorStack = StackNavigationProp<MainParamsList, ScreenRoutes.Starships>;
+export type StarshipScreenScreenNavigatorStack = StackNavigationProp<StarshipParamsList, ScreenRoutes.Starship>;

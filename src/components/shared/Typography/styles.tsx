@@ -32,16 +32,26 @@ export const StyledText = styled.Text<TypographyStyleProps>`
   ${({ fontFamily = 'regular' }) => `fontFamily: ${fonts[fontFamily]}`};
   ${({ theme, color }) => {
       switch (color) {
-          case 'primary':
-              return `color: ${theme.colors.primary}`;
-          case 'secondary':
-              return `color: ${theme.colors.secondary}`;
-          case 'light':
-              return `color: ${theme.colors.light}`;
-          case 'dark':
-              return `color: ${theme.colors.dark}`;
+          case 'background':
+              return `color: ${theme.colors.background}`;
+          case 'grey':
+              return `color: ${theme.colors.grey}`;
+          case 'sith-red':
+              return `color: ${theme.colors['sith-red']}`;
+          case 'jedi-blue':
+              return `color: ${theme.colors['jedi-blue']}`;
+          case 'naboo':
+              return `color: ${theme.colors.naboo}`;
+          case 'rebel-green':
+              return `color: ${theme.colors['rebel-green']}`;
+          case 'empire-blue':
+              return `color: ${theme.colors['empire-blue']}`;
+          case 'crawl-yellow':
+              return `color: ${theme.colors['crawl-yellow']}`;
+          case 'white':
+              return `color: ${theme.colors.white}`;
           default:
-              return `color: ${theme?.colors?.dark}`;
+              return `color: ${theme?.colors.white}`;
       }
   }}
 
