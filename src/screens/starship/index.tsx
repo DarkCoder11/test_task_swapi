@@ -72,10 +72,10 @@ const Starship: React.FC<StarshipProps> = ({ route }) => {
     const infoRenderer = infoList.map((item) => {
         return (
             <Flex key={item.name} paddingString="5px 0" flexDirection="row" alignItems="center">
-                <Typography fontFamily="semiBold" type="bodyLarge">
+                <Typography fontFamily="semiBold" type="body">
                     {item.name}:
                 </Typography>
-                <Typography type="bodyLarge"> {item.info}</Typography>
+                <Typography type="body"> {item.info}</Typography>
             </Flex>
         );
     });
