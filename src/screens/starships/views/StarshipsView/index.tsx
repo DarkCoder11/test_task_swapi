@@ -1,5 +1,7 @@
 import React from 'react';
-import { FlatList, View } from 'react-native';
+import { FlatList } from 'react-native';
+
+import { Flex } from 'src/components';
 
 import { StarshipsViewProps } from '../../types';
 import { StarshipRenderer } from '../StarshipRenderer';
@@ -11,9 +13,11 @@ export const StarshipsView: React.FC<StarshipsViewProps> = ({ starships }) => {
             removeClippedSubviews={true}
             showsVerticalScrollIndicator={false}
             keyExtractor={(i, index) => String(index)}
-            renderItem={({ item }) => <StarshipRenderer {...item} />}
+            renderItem={({ item }) => {
+                return <StarshipRenderer {...item} />;
+            }}
         />
     );
 
-    return <View>{dataList}</View>;
+    return <Flex>{dataList}</Flex>;
 };

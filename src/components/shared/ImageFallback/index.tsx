@@ -3,7 +3,7 @@ import { Image } from 'react-native';
 
 import { ImageFallbackProps } from './types';
 
-const ImageFallback: React.FC<ImageFallbackProps> = ({ imageUri, fallbackUri, style }) => {
+const ImageFallback: React.FC<ImageFallbackProps> = ({ imageUri, fallbackUri, resizeMode, fallbackStyles, style }) => {
     const [loading, setLoading] = useState<boolean>(true);
     const [isValid, setIsValid] = useState<boolean | null>(null);
 
@@ -16,9 +16,9 @@ const ImageFallback: React.FC<ImageFallbackProps> = ({ imageUri, fallbackUri, st
     }, []);
 
     if (loading || !isValid) {
-        return <Image style={style} source={{ uri: fallbackUri }} />;
+        return fallbackUri ? <Image style={fallbackStyles} source={{ uri: fallbackUri }} /> : null;
     }
-    return <Image style={style} source={{ uri: imageUri }} />;
+    return <Image resizeMode={resizeMode} style={style} source={{ uri: imageUri }} />;
 };
 
 export default ImageFallback;

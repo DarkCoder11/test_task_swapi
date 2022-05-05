@@ -57,7 +57,9 @@ const useImageColors = (uri: string) => {
     };
 
     useEffect(() => {
-        fetchColors();
+        fetchColors()
+            .then((r) => r)
+            .catch((err) => console.log(err));
     }, [uri]);
 
     return { picLoading: loading, colors };

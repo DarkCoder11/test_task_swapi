@@ -3,7 +3,7 @@ import { useInfiniteQuery } from 'react-query';
 import { useScrollToTop } from '@react-navigation/native';
 import { ActivityIndicator, FlatList, RefreshControl } from 'react-native';
 
-import { Typography, Wrapper } from 'src/components';
+import { Flex, Typography, Wrapper } from 'src/components';
 import { getStarships } from 'src/services/api/starships';
 
 import { StarshipsView } from './views';
@@ -12,7 +12,7 @@ const Starships = () => {
     const ref = useRef(null);
 
     useScrollToTop(ref);
-    const { data, fetchNextPage, hasNextPage, isLoading, isRefetching, refetch, isError } = useInfiniteQuery(
+    const { data, fetchNextPage, hasNextPage, isLoading, isRefetching, refetch } = useInfiniteQuery(
         'exampleState',
         getStarships,
         {
@@ -34,19 +34,25 @@ const Starships = () => {
                 onEndReachedThreshold={0.4}
                 removeClippedSubviews={true}
                 showsVerticalScrollIndicator={false}
-                onEndReached={() => fetchNextPage()}
+                onEndReached={() => hasNextPage && fetchNextPage()}
                 keyExtractor={(i, index) => String(index)}
                 renderItem={({ item }) => <StarshipsView starships={item.results} />}
                 refreshControl={<RefreshControl refreshing={isRefetching} onRefresh={() => refetch()} />}
             />
         );
-    }, [data?.pages, fetchNextPage, isRefetching, refetch]);
+    }, [data?.pages, fetchNextPage, hasNextPage, isRefetching, refetch]);
 
     return (
         <Wrapper>
-            <Typography>Starships</Typography>
-            {isLoading || isError ? <ActivityIndicator /> : dataList}
-            {!isLoading && !hasNextPage && <Typography>You can't load more</Typography>}
+            <Flex paddingString="10px">
+                <Typography type="h1">Starships</Typography>
+            </Flex>
+            {isLoading ? <ActivityIndicator /> : <Flex marginString="0 0 133px 0">{dataList}</Flex>}
+            {!hasNextPage && !isLoading && (
+                <Typography type="label" textAlign="center">
+                    You can't load more
+                </Typography>
+            )}
         </Wrapper>
     );
 };
