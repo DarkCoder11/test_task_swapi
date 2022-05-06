@@ -12,6 +12,7 @@ export const PlanetWrapper = styled.View`
 
 export const styles = StyleSheet.create({
     img: {
+        marginVertical: 8,
         width: 160,
         height: 170,
         marginLeft: 5,

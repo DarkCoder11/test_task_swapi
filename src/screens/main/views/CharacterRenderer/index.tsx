@@ -1,17 +1,22 @@
 import React from 'react';
 import { View } from 'react-native';
 import { useQuery } from 'react-query';
+import { useNavigation } from '@react-navigation/native';
 
 import { FemaleIcon, MaleIcon } from 'src/assets/icons';
 import { FALLBACK_IMAGE_URI } from 'src/constants/constants';
 import { getCharacterImageUrl } from 'src/utils';
-import { ImageFallback, Flex, Typography, RenderStat } from 'src/components';
+import { ImageFallback, Flex, Typography, RenderStat, Button } from 'src/components';
 import { getCharacterById } from 'src/services/api/characters';
+import { ScreenRoutes } from 'src/navigation/routes';
+import { MainScreenNavigatorStack } from 'src/navigation/navigators/main-screen-navigator/types';
 
 import { styles, CharacterWrapper } from './styles';
 
 export const CharacterRenderer = ({ id }: { id: string }) => {
     const { data: character, isLoading } = useQuery([id, 'character'], getCharacterById);
+
+    const navigation = useNavigation<MainScreenNavigatorStack>();
 
     const uri = getCharacterImageUrl(id);
 
@@ -30,10 +35,6 @@ export const CharacterRenderer = ({ id }: { id: string }) => {
             title: 'Hair Color',
             stat: character?.hair_color,
         },
-        {
-            title: 'Skin Color',
-            stat: character?.skin_color,
-        },
     ];
 
     const dataListRenderer = dataList.map(
@@ -45,17 +46,23 @@ export const CharacterRenderer = ({ id }: { id: string }) => {
             ),
     );
 
+    const navigateToCharacter = () => {
+        navigation.navigate(ScreenRoutes.Character, { characterId: id });
+    };
+
     return (
         <>
             {!isLoading && (
                 <CharacterWrapper>
-                    <ImageFallback
-                        imageUri={uri}
-                        style={styles.img}
-                        resizeMode="cover"
-                        fallbackStyles={styles.img}
-                        fallbackUri={FALLBACK_IMAGE_URI}
-                    />
+                    <Button onPress={navigateToCharacter}>
+                        <ImageFallback
+                            imageUri={uri}
+                            style={styles.img}
+                            resizeMode="cover"
+                            fallbackStyles={styles.img}
+                            fallbackUri={FALLBACK_IMAGE_URI}
+                        />
+                    </Button>
                     <Flex marginString="10px">
                         <Flex flexDirection="row" alignItems="center">
                             {character?.gender === 'female' ? (

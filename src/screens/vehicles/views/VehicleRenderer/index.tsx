@@ -3,12 +3,12 @@ import { View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { useQuery } from 'react-query';
 
-import { ScreenRoutes } from 'src/navigation/routes';
-import { FALLBACK_IMAGE_URI } from 'src/constants/constants';
 import { getVehicleImageUrl } from 'src/utils';
+import { ScreenRoutes } from 'src/navigation/routes';
+import { getVehicleById } from 'src/services/api/vehicles';
+import { FALLBACK_IMAGE_URI } from 'src/constants/constants';
 import { Button, Flex, ImageFallback, RenderStat, Typography } from 'src/components';
 import { VehiclesScreenNavigatorStack } from 'src/navigation/navigators/vehicles-screen-navigator/types';
-import { getVehicleById } from 'src/services/api/vehicles';
 
 import { styles, PlanetWrapper } from './styles';
 
@@ -47,9 +47,9 @@ export const VehicleRenderer = ({ id }: { id: string }) => {
     ));
 
     return (
-        <PlanetWrapper>
+        <>
             {!isLoading && (
-                <>
+                <PlanetWrapper>
                     <Button onPress={navigateToVehicle}>
                         <ImageFallback
                             imageUri={uri}
@@ -67,8 +67,8 @@ export const VehicleRenderer = ({ id }: { id: string }) => {
                         </Button>
                         {infoRenderer}
                     </Flex>
-                </>
+                </PlanetWrapper>
             )}
-        </PlanetWrapper>
+        </>
     );
 };

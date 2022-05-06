@@ -33,7 +33,6 @@ const Main = () => {
                 data={data?.pages}
                 maxToRenderPerBatch={10}
                 onEndReachedThreshold={0.4}
-                // removeClippedSubviews={true}
                 showsVerticalScrollIndicator={false}
                 onEndReached={() => hasNextPage && fetchNextPage()}
                 keyExtractor={(i, index) => String(index)}
@@ -48,7 +47,7 @@ const Main = () => {
             <Flex paddingString="10px">
                 <Typography type="h1">Characters</Typography>
             </Flex>
-            {isLoading ? <ActivityIndicator /> : <Flex marginString={`0 0 ${IS_IOS ? 100 : 133}px 0`}>{dataList}</Flex>}
+            {isLoading ? <ActivityIndicator /> : <Flex marginString={`0 0 ${IS_IOS ? 100 : 120}px 0`}>{dataList}</Flex>}
             {!hasNextPage && !isLoading && (
                 <Typography type="label" textAlign="center">
                     You can't load more
