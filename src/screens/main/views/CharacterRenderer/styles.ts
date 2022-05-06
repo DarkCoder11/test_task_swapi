@@ -11,9 +11,9 @@ export const CharacterWrapper = styled.View`
 
 export const styles = StyleSheet.create({
     img: {
+        margin: 8,
         height: 175,
         width: 150,
-        borderTopLeftRadius: 7,
-        borderBottomLeftRadius: 7,
+        borderRadius: 7,
     },
 });
