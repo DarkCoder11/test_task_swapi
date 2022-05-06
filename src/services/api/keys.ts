@@ -5,4 +5,6 @@ export const QUERY_KEYS = {
     GetCharacterId: 'people/',
     GetPlanets: 'planets?limit=10',
     GetPlanetId: 'planets/',
+    GetVehicles: 'vehicles?limit=10',
+    GetVehicleId: 'vehicles/',
 } as const;
