@@ -16,4 +16,9 @@ export const styles = StyleSheet.create({
         borderTopLeftRadius: 7,
         borderBottomLeftRadius: 7,
     },
+    planetImage: {
+        height: 300,
+        width: '100%',
+        borderRadius: 7,
+    },
 });

@@ -4,9 +4,9 @@ import { FlatList } from 'react-native';
 import { Flex } from 'src/components';
 
 import { PlanetRenderer } from '../PlanetRenderer';
-import { PlanetType } from '../../types';
+import { Planet } from '../../types';
 
-export const PlanetView: React.FC<{ planets: PlanetType[] }> = ({ planets }) => {
+export const PlanetView: React.FC<{ planets: Planet[] }> = ({ planets }) => {
     const dataList = (
         <FlatList
             data={planets}

@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { useQuery } from 'react-query';
-import { ActivityIndicator, FlatList, ScrollView } from 'react-native';
+import { ActivityIndicator } from 'react-native';
 
 import { Button, Flex, ImageFallback, Typography, Wrapper } from 'src/components';
 import { ChevronBack } from 'src/assets/icons';
@@ -71,7 +71,7 @@ const Starship: React.FC<StarshipProps> = ({ route }) => {
 
     const infoRenderer = infoList.map((item) => {
         return (
-            <Flex key={item.name} paddingString="5px 0" flexDirection="row" alignItems="center">
+            <Flex key={item.name} flexDirection="row" alignItems="center">
                 <Typography fontFamily="semiBold" type="body">
                     {item.name}:
                 </Typography>
@@ -104,7 +104,7 @@ const Starship: React.FC<StarshipProps> = ({ route }) => {
                         fallbackStyles={styles.img}
                         fallbackUri={FALLBACK_IMAGE_URI}
                     />
-                    {infoRenderer}
+                    <Flex marginString="10px 0">{infoRenderer}</Flex>
                 </Container>
             )}
         </Wrapper>

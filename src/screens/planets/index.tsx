@@ -11,8 +11,8 @@ import { PlanetView } from './views';
 
 const Planets: React.FC = () => {
     const ref = useRef(null);
-
     useScrollToTop(ref);
+
     const { data, fetchNextPage, hasNextPage, isLoading, isRefetching, refetch } = useInfiniteQuery(
         'exampleState',
         getPlanets,
@@ -46,7 +46,7 @@ const Planets: React.FC = () => {
     return (
         <Wrapper>
             <Flex paddingString="10px">
-                <Typography type="h1">Characters</Typography>
+                <Typography type="h1">Planets</Typography>
             </Flex>
             {isLoading ? <ActivityIndicator /> : <Flex marginString={`0 0 ${IS_IOS ? 100 : 133}px 0`}>{dataList}</Flex>}
             {!hasNextPage && !isLoading && (

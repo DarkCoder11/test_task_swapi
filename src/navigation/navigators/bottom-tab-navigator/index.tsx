@@ -10,7 +10,7 @@ import { styles } from './styles';
 
 import MainScreenNavigator from '../main-screen-navigator';
 import StarshipsNavigator from '../starships-screen-navigator';
-import PlanetsNavigator from '../planets-screen-navigator';
+import PlanetsScreenNavigator from '../planets-screen-navigator';
 import { NavigatorRoutes, ScreenRoutes } from '../../routes';
 
 const Tab = createBottomTabNavigator();
@@ -100,7 +100,7 @@ const BottomTabNavigator = () => {
         >
             <Tab.Screen name={NavigatorRoutes.Main} component={MainScreenNavigator} />
             <Tab.Screen name={NavigatorRoutes.Starships} component={StarshipsNavigator} />
-            <Tab.Screen name={NavigatorRoutes.Planets} component={PlanetsNavigator} />
+            <Tab.Screen name={NavigatorRoutes.Planets} component={PlanetsScreenNavigator} />
         </Tab.Navigator>
     );
 };

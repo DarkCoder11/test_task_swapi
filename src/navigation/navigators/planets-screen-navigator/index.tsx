@@ -9,8 +9,8 @@ const Stack = createStackNavigator();
 const PlanetsScreenNavigator = () => {
     return (
         <Stack.Navigator screenOptions={{ headerShown: false }}>
-            <Stack.Screen name={ScreenRoutes.Planet} component={Planet} />
             <Stack.Screen name={ScreenRoutes.Planets} component={Planets} />
+            <Stack.Screen name={ScreenRoutes.Planet} component={Planet} />
         </Stack.Navigator>
     );
 };

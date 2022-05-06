@@ -7,8 +7,6 @@ import { StarshipsViewProps } from '../../types';
 import { StarshipRenderer } from '../StarshipRenderer';
 
 export const StarshipsView: React.FC<StarshipsViewProps> = ({ starships }) => {
-    console.log(starships, 'starships');
-
     const dataList = (
         <FlatList
             data={starships}
