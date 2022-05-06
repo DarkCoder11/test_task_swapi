@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 import { View } from 'react-native';
 import { useQuery } from 'react-query';
 import { useNavigation } from '@react-navigation/native';
@@ -17,63 +17,52 @@ const Planet: React.FC<PlanetProps> = ({ route }) => {
 
     const id = route.params.planetId;
 
-    const { data, isLoading } = useQuery(id, getPlanetById);
+    const { data, isLoading } = useQuery([id, 'planet'], getPlanetById);
     const uri = getPlanetImageUrl(id);
 
     const navigateBack = () => {
         navigation.goBack();
     };
 
-    const dataList = useMemo(() => {
-        return [
-            {
-                title: 'Climate',
-                stat: data?.climate,
-            },
-            {
-                title: 'Diameter',
-                stat: data?.diameter,
-                symbol: 'm',
-            },
-            {
-                title: 'Gravity',
-                stat: data?.gravity,
-                symbol: 'm',
-            },
-            {
-                title: 'Orbital period',
-                stat: data?.orbital_period,
-                symbol: 'hrs',
-            },
-            {
-                title: 'Population',
-                stat: String(convertNumToReadableStr(data?.population)),
-            },
-            {
-                title: 'Rotation period',
-                stat: data?.rotation_period,
-                symbol: 'hr',
-            },
-            {
-                title: 'Surface water',
-                stat: data?.surface_water,
-                symbol: '%',
-            },
-            {
-                title: 'Terrain',
-                stat: data?.terrain,
-            },
-        ];
-    }, [
-        data?.climate,
-        data?.diameter,
-        data?.gravity,
-        data?.orbital_period,
-        data?.population,
-        data?.rotation_period,
-        data?.surface_water,
-        data?.terrain,
-    ]);
+    const dataList = [
+        {
+            title: 'Climate',
+            stat: data?.climate,
+        },
+        {
+            title: 'Diameter',
+            stat: data?.diameter,
+            symbol: 'm',
+        },
+        {
+            title: 'Gravity',
+            stat: data?.gravity,
+            symbol: 'm',
+        },
+        {
+            title: 'Orbital period',
+            stat: data?.orbital_period,
+            symbol: 'hrs',
+        },
+        {
+            title: 'Population',
+            stat: String(convertNumToReadableStr(data?.population)),
+        },
+        {
+            title: 'Rotation period',
+            stat: data?.rotation_period,
+            symbol: 'hr',
+        },
+        {
+            title: 'Surface water',
+            stat: data?.surface_water,
+            symbol: '%',
+        },
+        {
+            title: 'Terrain',
+            stat: data?.terrain,
+        },
+    ];
 
     const dataListRendered = dataList.map(
         (item) =>
@@ -96,7 +85,7 @@ const Planet: React.FC<PlanetProps> = ({ route }) => {
             </Flex>
             {!isLoading && (
                 <Flex marginString="0 15px">
-                    <Typography type="h1">{data.name}</Typography>
+                    <Typography type="h1">{data?.name}</Typography>
                     <Flex marginString="15px 0">
                         <ImageFallback
                             imageUri={uri}

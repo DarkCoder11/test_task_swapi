@@ -1,51 +1,49 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 import { View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import { useQuery } from 'react-query';
 
 import { ScreenRoutes } from 'src/navigation/routes';
 import { FALLBACK_IMAGE_URI } from 'src/constants/constants';
-import { getVehicleImageUrl, getNumFromStr } from 'src/utils';
+import { getVehicleImageUrl } from 'src/utils';
 import { Button, Flex, ImageFallback, RenderStat, Typography } from 'src/components';
 import { VehiclesScreenNavigatorStack } from 'src/navigation/navigators/vehicles-screen-navigator/types';
+import { getVehicleById } from 'src/services/api/vehicles';
 
 import { styles, PlanetWrapper } from './styles';
 
-import { Vehicle } from '../../types';
-
-export const VehicleRenderer = (vehicle: Vehicle) => {
+export const VehicleRenderer = ({ id }: { id: string }) => {
     const navigation = useNavigation<VehiclesScreenNavigatorStack>();
 
-    const id = getNumFromStr(vehicle.url);
+    const { data: vehicle, isLoading } = useQuery([id, 'vehicles'], getVehicleById);
+
     const uri = getVehicleImageUrl(id);
 
     const navigateToVehicle = () => {
         navigation.navigate(ScreenRoutes.Vehicle, { vehicleId: id });
     };
 
-    const infoList = useMemo(
-        () => [
-            {
-                name: 'Cargo Capacity',
-                stat: vehicle?.cargo_capacity,
-                symbol: 'V',
-            },
-            {
-                name: 'Crew',
-                stat: vehicle?.crew,
-            },
-            {
-                name: 'Class',
-                stat: vehicle?.vehicle_class,
-                width: '170px',
-            },
-            {
-                name: 'Max Speed',
-                stat: vehicle?.max_atmosphering_speed,
-                symbol: 'C',
-            },
-        ],
-        [vehicle?.cargo_capacity, vehicle?.crew, vehicle?.max_atmosphering_speed, vehicle?.vehicle_class],
-    );
+    const infoList = [
+        {
+            name: 'Cargo Capacity',
+            stat: vehicle?.cargo_capacity,
+            symbol: 'V',
+        },
+        {
+            name: 'Crew',
+            stat: vehicle?.crew,
+        },
+        {
+            name: 'Class',
+            stat: vehicle?.vehicle_class,
+            width: '170px',
+        },
+        {
+            name: 'Max Speed',
+            stat: vehicle?.max_atmosphering_speed,
+            symbol: 'C',
+        },
+    ];
 
     const infoRenderer = infoList.map((item) => (
         <View key={item.name}>
@@ -60,23 +58,27 @@ export const VehicleRenderer = (vehicle: Vehicle) => {
 
     return (
         <PlanetWrapper>
-            <Button onPress={navigateToVehicle}>
-                <ImageFallback
-                    imageUri={uri}
-                    style={styles.img}
-                    resizeMode="contain"
-                    fallbackStyles={styles.img}
-                    fallbackUri={FALLBACK_IMAGE_URI}
-                />
-            </Button>
-            <Flex marginString="0 5px" width="170px">
-                <Button onPress={navigateToVehicle}>
-                    <Typography type="bodyLarge" fontFamily="bold">
-                        {vehicle.name}
-                    </Typography>
-                </Button>
-                {infoRenderer}
-            </Flex>
+            {!isLoading && (
+                <>
+                    <Button onPress={navigateToVehicle}>
+                        <ImageFallback
+                            imageUri={uri}
+                            style={styles.img}
+                            resizeMode="contain"
+                            fallbackStyles={styles.img}
+                            fallbackUri={FALLBACK_IMAGE_URI}
+                        />
+                    </Button>
+                    <Flex marginString="0 5px" width="170px">
+                        <Button onPress={navigateToVehicle}>
+                            <Typography type="bodyLarge" fontFamily="bold">
+                                {vehicle?.name}
+                            </Typography>
+                        </Button>
+                        {infoRenderer}
+                    </Flex>
+                </>
+            )}
         </PlanetWrapper>
     );
 };

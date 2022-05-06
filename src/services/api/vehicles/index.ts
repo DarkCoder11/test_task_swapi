@@ -7,8 +7,8 @@ export const getVehicles = ({ pageParam = QUERY_KEYS.GetVehicles }) => {
 };
 
 export const getVehicleById = async ({ queryKey }: { queryKey: string[] }) => {
-    const id = queryKey[0];
+    const [prodId, _] = queryKey;
 
-    const { data } = await api.get(QUERY_KEYS.GetVehicleId + id);
+    const { data } = await api.get(QUERY_KEYS.GetVehicleId + prodId);
     return data;
 };

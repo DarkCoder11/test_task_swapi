@@ -14,7 +14,7 @@ const Main = () => {
 
     useScrollToTop(ref);
     const { data, fetchNextPage, hasNextPage, isLoading, isRefetching, refetch } = useInfiniteQuery(
-        'exampleState',
+        'characters',
         getCharacters,
         {
             getNextPageParam: (lastPage) => {

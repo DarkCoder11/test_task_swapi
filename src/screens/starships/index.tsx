@@ -14,7 +14,7 @@ const Starships = () => {
 
     useScrollToTop(ref);
     const { data, fetchNextPage, hasNextPage, isLoading, isRefetching, refetch } = useInfiniteQuery(
-        'exampleState',
+        'starships',
         getStarships,
         {
             getNextPageParam: (lastPage) => {

@@ -11,11 +11,13 @@ export const StarshipCard = styled.View`
 
 export const styles = StyleSheet.create({
     img: {
+        marginTop: 10,
         width: '100%',
         height: 320,
         borderRadius: 8,
     },
     fallbackImg: {
+        marginTop: 10,
         width: '100%',
         height: 110,
         borderRadius: 8,

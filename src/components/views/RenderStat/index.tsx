@@ -19,7 +19,7 @@ const RenderStat: React.FC<RenderStatProps> = ({ title, stat, symbol, width = '1
             <Typography fontFamily="bold" textTransform="capitalize" type={textType}>
                 {title}:
             </Typography>
-            <Flex marginString="0 2px">
+            <Flex marginString="0 8px">
                 <Typography textTransform="capitalize" type={textType}>
                     {stat} {symbol && symbol}
                 </Typography>

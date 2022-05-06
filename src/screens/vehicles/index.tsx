@@ -14,7 +14,7 @@ const Vehicles: React.FC = () => {
     useScrollToTop(ref);
 
     const { data, fetchNextPage, hasNextPage, isLoading, isRefetching, refetch } = useInfiniteQuery(
-        'exampleState',
+        'vehicles',
         getVehicles,
         {
             getNextPageParam: (lastPage) => {

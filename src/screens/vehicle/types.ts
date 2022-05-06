@@ -1,3 +1,3 @@
-export type PlanetProps = {
+export type VehicleProps = {
     route: any;
 };

@@ -2,24 +2,24 @@ import React, { useMemo } from 'react';
 import { FlatList } from 'react-native';
 
 import { Flex } from 'src/components';
+import { getNumFromStr } from 'src/utils';
 
 import { VehicleRenderer } from '../VehicleRenderer';
 import { Vehicle } from '../../types';
 
 export const VehicleView: React.FC<{ vehicles: Vehicle[] }> = ({ vehicles }) => {
-    const dataList = useMemo(() => {
+    const vehiclesDataList = useMemo(() => {
         return (
             <FlatList
                 data={vehicles}
-                removeClippedSubviews={true}
                 showsVerticalScrollIndicator={false}
                 keyExtractor={(i, index) => String(index)}
                 renderItem={({ item }) => {
-                    return <VehicleRenderer {...item} />;
+                    return <VehicleRenderer id={getNumFromStr(item.url)} />;
                 }}
             />
         );
     }, [vehicles]);
 
-    return <Flex>{dataList}</Flex>;
+    return <Flex>{vehiclesDataList}</Flex>;
 };

@@ -1,62 +1,47 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 import { View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import { useQuery } from 'react-query';
 
-import { Flex, ImageFallback, Typography, Button, RenderStat } from 'src/components';
-import { getNumFromStr, getStarshipImageUrl } from 'src/utils';
-import { FALLBACK_IMAGE_URI, SOUND_SPEED } from 'src/constants/constants';
+import { ImageFallback, Button, RenderStat } from 'src/components';
+import { getStarshipImageUrl } from 'src/utils';
+import { FALLBACK_IMAGE_URI } from 'src/constants/constants';
 import { ScreenRoutes } from 'src/navigation/routes';
 import { StarshipScreenScreenNavigatorStack } from 'src/navigation/navigators/starships-screen-navigator/types';
+import { getStarshipById } from 'src/services/api/starships';
 
 import { styles, StarshipCard } from './styles';
 
-import { StarshipsParams } from '../../types';
-
-const modelAndNameMatch = (name: string, model: string) => {
-    if (name.match(model)) {
-        return (
-            <Typography type="h1-small" fontFamily="semiBold">
-                {name}
-            </Typography>
-        );
-    }
-    return (
-        <Flex>
-            <Typography type="h1-small" fontFamily="semiBold">
-                {name}
-            </Typography>
-            <Typography type="bodyLarge">{model}</Typography>
-        </Flex>
-    );
-};
-
-export const StarshipRenderer = (starship: StarshipsParams) => {
+export const StarshipRenderer = ({ id }: { id: string }) => {
     const navigation = useNavigation<StarshipScreenScreenNavigatorStack>();
 
-    const id = getNumFromStr(starship.url);
+    const { data: starship, isLoading } = useQuery([id, 'starship'], getStarshipById);
+
     const uri = getStarshipImageUrl(id);
 
     const navigateStarship = () => {
         navigation.navigate(ScreenRoutes.Starship, { id, uri });
     };
 
-    const dataList = useMemo(() => {
-        return [
-            {
-                title: 'Crew',
-                stat: starship?.crew,
-            },
-            {
-                title: 'Class',
-                stat: starship?.starship_class,
-            },
-            {
-                title: 'Max speed',
-                stat: starship?.max_atmosphering_speed,
-                symbol: 'C',
-            },
-        ];
-    }, [starship?.crew, starship?.max_atmosphering_speed, starship?.starship_class]);
+    const dataList = [
+        {
+            title: 'name',
+            stat: starship?.name,
+        },
+        {
+            title: 'Crew',
+            stat: starship?.crew,
+        },
+        {
+            title: 'Class',
+            stat: starship?.starship_class,
+        },
+        {
+            title: 'Max speed',
+            stat: starship?.max_atmosphering_speed,
+            symbol: 'C',
+        },
+    ];
 
     const dataListRenderer = dataList.map(
         (item) =>
@@ -66,23 +51,23 @@ export const StarshipRenderer = (starship: StarshipsParams) => {
                 </View>
             ),
     );
+
     return (
         <View>
-            <StarshipCard>
-                <Button onPress={navigateStarship}>
-                    <Flex paddingString="10px 0 10px 0">{modelAndNameMatch(starship.name, starship.model)}</Flex>
-                </Button>
-                <Button onPress={navigateStarship}>
-                    <ImageFallback
-                        imageUri={uri}
-                        style={styles.img}
-                        resizeMode="cover"
-                        fallbackStyles={styles.fallbackImg}
-                        fallbackUri={FALLBACK_IMAGE_URI}
-                    />
-                </Button>
-                {dataListRenderer}
-            </StarshipCard>
+            {!isLoading && (
+                <StarshipCard>
+                    <Button onPress={navigateStarship}>
+                        <ImageFallback
+                            imageUri={uri}
+                            style={styles.img}
+                            resizeMode="cover"
+                            fallbackStyles={styles.fallbackImg}
+                            fallbackUri={FALLBACK_IMAGE_URI}
+                        />
+                    </Button>
+                    {dataListRenderer}
+                </StarshipCard>
+            )}
         </View>
     );
 };
