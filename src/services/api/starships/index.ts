@@ -7,8 +7,8 @@ export const getStarships = ({ pageParam = QUERY_KEYS.GetStartships }) => {
 };
 
 export const getStarshipById = async ({ queryKey }: { queryKey: string[] }) => {
-    const id = queryKey[0];
+    const [prodId, _] = queryKey;
 
-    const { data } = await api.get(QUERY_KEYS.GetStartshipId + id);
+    const { data } = await api.get(QUERY_KEYS.GetStartshipId + prodId);
     return data;
 };

@@ -4,7 +4,8 @@ import { useTheme } from 'styled-components/native';
 import { useNavigation } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
-import { DarthVaderIcon, PlanetIcon, SpaceshipIcon } from 'src/assets/icons';
+import { DarthVaderIcon, PlanetIcon, SpaceshipIcon, VehicleIcon } from 'src/assets/icons';
+import VehiclesScreenNavigator from 'src/navigation/navigators/vehicles-screen-navigator';
 
 import { styles } from './styles';
 
@@ -20,6 +21,7 @@ const getTabIconsMapping = (route: NavigatorRoutes) => {
         [NavigatorRoutes.Main]: () => DarthVaderIcon,
         [NavigatorRoutes.Starships]: () => SpaceshipIcon,
         [NavigatorRoutes.Planets]: () => PlanetIcon,
+        [NavigatorRoutes.Vehicles]: () => VehicleIcon,
     };
     return iconMap[route]?.();
 };
@@ -101,6 +103,7 @@ const BottomTabNavigator = () => {
             <Tab.Screen name={NavigatorRoutes.Main} component={MainScreenNavigator} />
             <Tab.Screen name={NavigatorRoutes.Starships} component={StarshipsNavigator} />
             <Tab.Screen name={NavigatorRoutes.Planets} component={PlanetsScreenNavigator} />
+            <Tab.Screen name={NavigatorRoutes.Vehicles} component={VehiclesScreenNavigator} />
         </Tab.Navigator>
     );
 };

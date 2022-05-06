@@ -1,47 +1,47 @@
 import React from 'react';
-import { useNavigation } from '@react-navigation/native';
 import { View } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 import { useQuery } from 'react-query';
 
 import { ScreenRoutes } from 'src/navigation/routes';
 import { FALLBACK_IMAGE_URI } from 'src/constants/constants';
+import { getVehicleImageUrl } from 'src/utils';
 import { Button, Flex, ImageFallback, RenderStat, Typography } from 'src/components';
-import { convertNumToReadableStr, getPlanetImageUrl } from 'src/utils';
-import { MainScreenNavigatorStack } from 'src/navigation/navigators/main-screen-navigator/types';
-import { getPlanetById } from 'src/services/api/planets';
+import { VehiclesScreenNavigatorStack } from 'src/navigation/navigators/vehicles-screen-navigator/types';
+import { getVehicleById } from 'src/services/api/vehicles';
 
 import { styles, PlanetWrapper } from './styles';
 
-export const PlanetRenderer = ({ id }: { id: string }) => {
-    const navigation = useNavigation<MainScreenNavigatorStack>();
+export const VehicleRenderer = ({ id }: { id: string }) => {
+    const navigation = useNavigation<VehiclesScreenNavigatorStack>();
 
-    const { data: planet, isLoading } = useQuery([id, 'planet'], getPlanetById);
+    const { data: vehicle, isLoading } = useQuery([id, 'vehicles'], getVehicleById);
 
-    const uri = getPlanetImageUrl(id);
+    const uri = getVehicleImageUrl(id);
 
-    const navigateToPlanet = () => {
-        navigation.navigate(ScreenRoutes.Planet, { planetId: id });
+    const navigateToVehicle = () => {
+        navigation.navigate(ScreenRoutes.Vehicle, { vehicleId: id });
     };
 
     const infoList = [
         {
-            name: 'Population',
-            stat: String(convertNumToReadableStr(planet?.population)),
+            name: 'Cargo Capacity',
+            stat: vehicle?.cargo_capacity,
+            symbol: 'V',
         },
         {
-            name: 'Climate',
-            stat: planet?.climate,
-            width: '160px',
+            name: 'Crew',
+            stat: vehicle?.crew,
         },
         {
-            name: 'Terrain',
-            stat: planet?.terrain,
-            width: '160px',
+            name: 'Class',
+            stat: vehicle?.vehicle_class,
+            width: '170px',
         },
         {
-            name: 'Suface Water',
-            stat: planet?.surface_water,
-            symbol: '%',
+            name: 'Max Speed',
+            stat: vehicle?.max_atmosphering_speed,
+            symbol: 'C',
         },
     ];
 
@@ -57,10 +57,10 @@ export const PlanetRenderer = ({ id }: { id: string }) => {
     ));
 
     return (
-        <>
+        <PlanetWrapper>
             {!isLoading && (
-                <PlanetWrapper>
-                    <Button onPress={navigateToPlanet}>
+                <>
+                    <Button onPress={navigateToVehicle}>
                         <ImageFallback
                             imageUri={uri}
                             style={styles.img}
@@ -69,16 +69,16 @@ export const PlanetRenderer = ({ id }: { id: string }) => {
                             fallbackUri={FALLBACK_IMAGE_URI}
                         />
                     </Button>
-                    <Flex marginString="5px 5px">
-                        <Button onPress={navigateToPlanet}>
+                    <Flex marginString="0 5px" width="170px">
+                        <Button onPress={navigateToVehicle}>
                             <Typography type="bodyLarge" fontFamily="bold">
-                                {planet.name}
+                                {vehicle?.name}
                             </Typography>
                         </Button>
                         {infoRenderer}
                     </Flex>
-                </PlanetWrapper>
+                </>
             )}
-        </>
+        </PlanetWrapper>
     );
 };

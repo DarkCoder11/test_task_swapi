@@ -3,22 +3,23 @@ import { View } from 'react-native';
 import { useQuery } from 'react-query';
 import { useNavigation } from '@react-navigation/native';
 
+import { getVehicleImageUrl } from 'src/utils';
 import { ChevronBack } from 'src/assets/icons';
-import { getPlanetById } from 'src/services/api/planets';
+import { getVehicleById } from 'src/services/api/vehicles';
 import { FALLBACK_IMAGE_URI } from 'src/constants/constants';
-import { convertNumToReadableStr, getPlanetImageUrl } from 'src/utils';
-import { Button, Flex, ImageFallback, RenderStat, Typography, Wrapper } from 'src/components';
+import { Flex, RenderStat, Button, Typography, Wrapper, ImageFallback } from 'src/components';
 
 import { styles } from './styles';
-import { PlanetProps } from './types';
+import { VehicleProps } from './types';
 
-const Planet: React.FC<PlanetProps> = ({ route }) => {
+const Vehicle: React.FC<VehicleProps> = ({ route }) => {
     const navigation = useNavigation();
 
-    const id = route.params.planetId;
+    const id = route.params.vehicleId;
 
-    const { data, isLoading } = useQuery([id, 'planet'], getPlanetById);
-    const uri = getPlanetImageUrl(id);
+    const { data, isLoading } = useQuery([id, 'vehicle'], getVehicleById);
+
+    const uri = getVehicleImageUrl(id);
 
     const navigateBack = () => {
         navigation.goBack();
@@ -26,52 +27,61 @@ const Planet: React.FC<PlanetProps> = ({ route }) => {
 
     const dataList = [
         {
-            title: 'Climate',
-            stat: data?.climate,
+            title: 'Model',
+            stat: data?.model,
         },
         {
-            title: 'Diameter',
-            stat: data?.diameter,
+            title: 'Manufacturer',
+            stat: data?.manufacturer,
+        },
+
+        {
+            title: 'Cargo Capacity',
+            stat: data?.cargo_capacity,
+            symbol: 'v',
+        },
+        {
+            title: 'Consumables',
+            stat: data?.consumables,
+        },
+        {
+            title: 'Cost',
+            stat: data?.cost_in_credits,
+            symbol: '$',
+        },
+        {
+            title: 'Crew',
+            stat: data?.crew,
+        },
+        {
+            title: 'Lenght',
+            stat: data?.length,
             symbol: 'm',
         },
         {
-            title: 'Gravity',
-            stat: data?.gravity,
-            symbol: 'm',
+            title: 'Max Speed',
+            stat: data?.max_atmosphering_speed,
+            symbol: 'C',
         },
         {
-            title: 'Orbital period',
-            stat: data?.orbital_period,
-            symbol: 'hrs',
+            title: 'Passengers',
+            stat: data?.passengers,
         },
         {
-            title: 'Population',
-            stat: String(convertNumToReadableStr(data?.population)),
-        },
-        {
-            title: 'Rotation period',
-            stat: data?.rotation_period,
-            symbol: 'hr',
-        },
-        {
-            title: 'Surface water',
-            stat: data?.surface_water,
-            symbol: '%',
-        },
-        {
-            title: 'Terrain',
-            stat: data?.terrain,
+            title: 'Class',
+            stat: data?.vehicle_class,
         },
     ];
 
-    const dataListRendered = dataList.map(
-        (item) =>
+    const dataListRendered = dataList.map((item) => {
+        return (
             item.stat && (
                 <View key={item.title}>
                     <RenderStat stat={item.stat} title={item.title} symbol={item.symbol && item.symbol} />
                 </View>
-            ),
-    );
+            )
+        );
+    });
 
     return (
         <Wrapper>
@@ -102,4 +112,4 @@ const Planet: React.FC<PlanetProps> = ({ route }) => {
     );
 };
 
-export default Planet;
+export default Vehicle;

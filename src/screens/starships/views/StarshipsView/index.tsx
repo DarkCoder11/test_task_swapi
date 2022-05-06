@@ -2,24 +2,24 @@ import React, { useMemo } from 'react';
 import { FlatList } from 'react-native';
 
 import { Flex } from 'src/components';
+import { getNumFromStr } from 'src/utils';
 
 import { StarshipsViewProps } from '../../types';
 import { StarshipRenderer } from '../StarshipRenderer';
 
 export const StarshipsView: React.FC<StarshipsViewProps> = ({ starships }) => {
-    const dataList = useMemo(() => {
+    const starshipsDataList = useMemo(() => {
         return (
             <FlatList
                 data={starships}
-                removeClippedSubviews={true}
                 showsVerticalScrollIndicator={false}
                 keyExtractor={(i, index) => String(index)}
                 renderItem={({ item }) => {
-                    return <StarshipRenderer {...item} />;
+                    return <StarshipRenderer id={getNumFromStr(item.url)} />;
                 }}
             />
         );
     }, [starships]);
 
-    return <Flex>{dataList}</Flex>;
+    return <Flex>{starshipsDataList}</Flex>;
 };

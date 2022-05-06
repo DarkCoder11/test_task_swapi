@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { useQuery } from 'react-query';
 import { ActivityIndicator, View } from 'react-native';
@@ -16,76 +16,61 @@ const Starship: React.FC<StarshipProps> = ({ route }) => {
     const uri = route.params.uri;
     const navigation = useNavigation();
 
-    const { data, isLoading } = useQuery(id, getStarshipById);
+    const { data, isLoading } = useQuery([id, 'starship'], getStarshipById);
 
     const navigateBack = () => {
         navigation.goBack();
     };
 
-    const infoList = useMemo(
-        () => [
-            {
-                name: 'Model',
-                stat: data?.model,
-            },
-            {
-                name: 'Manufacturer',
-                stat: data?.manufacturer,
-            },
-            {
-                name: 'Class',
-                stat: data?.starship_class,
-            },
-            {
-                name: 'MGLT',
-                stat: data?.MGLT,
-            },
-            {
-                name: 'Passengers',
-                stat: data?.passengers,
-            },
-            {
-                name: 'Atmosphering speed',
-                stat: data?.max_atmosphering_speed,
-                symbol: 'C',
-            },
-            {
-                name: 'Crew',
-                stat: data?.crew,
-            },
-            {
-                name: 'Cost',
-                stat: data?.cost_in_credits,
-                symbol: '$',
-            },
-            {
-                name: 'Cargo capacity',
-                stat: data?.cargo_capacity,
-                symbol: 'V',
-            },
-            {
-                name: 'Hyperdrive rating',
-                stat: data?.hyperdrive_rating,
-            },
-            {
-                name: 'Consumables',
-                stat: data?.consumables,
-            },
-        ],
-        [
-            data?.MGLT,
-            data?.cargo_capacity,
-            data?.consumables,
-            data?.cost_in_credits,
-            data?.crew,
-            data?.hyperdrive_rating,
-            data?.manufacturer,
-            data?.max_atmosphering_speed,
-            data?.model,
-            data?.passengers,
-            data?.starship_class,
-        ],
-    );
+    const infoList = [
+        {
+            name: 'Model',
+            stat: data?.model,
+        },
+        {
+            name: 'Manufacturer',
+            stat: data?.manufacturer,
+        },
+        {
+            name: 'Class',
+            stat: data?.starship_class,
+        },
+        {
+            name: 'MGLT',
+            stat: data?.MGLT,
+        },
+        {
+            name: 'Passengers',
+            stat: data?.passengers,
+        },
+        {
+            name: 'Atmosphering speed',
+            stat: data?.max_atmosphering_speed,
+            symbol: 'C',
+        },
+        {
+            name: 'Crew',
+            stat: data?.crew,
+        },
+        {
+            name: 'Cost',
+            stat: data?.cost_in_credits,
+            symbol: '$',
+        },
+        {
+            name: 'Cargo capacity',
+            stat: data?.cargo_capacity,
+            symbol: 'V',
+        },
+        {
+            name: 'Hyperdrive rating',
+            stat: data?.hyperdrive_rating,
+        },
+        {
+            name: 'Consumables',
+            stat: data?.consumables,
+        },
+    ];
 
     const infoRenderer = infoList.map((item) => {
         return (

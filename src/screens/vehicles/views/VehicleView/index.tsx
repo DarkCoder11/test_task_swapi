@@ -4,22 +4,22 @@ import { FlatList } from 'react-native';
 import { Flex } from 'src/components';
 import { getNumFromStr } from 'src/utils';
 
-import { PlanetRenderer } from '../PlanetRenderer';
-import { Planet } from '../../types';
+import { VehicleRenderer } from '../VehicleRenderer';
+import { Vehicle } from '../../types';
 
-export const PlanetView: React.FC<{ planets: Planet[] }> = ({ planets }) => {
-    const planetDataList = useMemo(() => {
+export const VehicleView: React.FC<{ vehicles: Vehicle[] }> = ({ vehicles }) => {
+    const vehiclesDataList = useMemo(() => {
         return (
             <FlatList
-                data={planets}
+                data={vehicles}
                 showsVerticalScrollIndicator={false}
                 keyExtractor={(i, index) => String(index)}
                 renderItem={({ item }) => {
-                    return <PlanetRenderer id={getNumFromStr(item.url)} />;
+                    return <VehicleRenderer id={getNumFromStr(item.url)} />;
                 }}
             />
         );
-    }, [planets]);
+    }, [vehicles]);
 
-    return <Flex>{planetDataList}</Flex>;
+    return <Flex>{vehiclesDataList}</Flex>;
 };

@@ -1,21 +1,21 @@
 import React, { useMemo, useRef } from 'react';
-import { useScrollToTop } from '@react-navigation/native';
 import { useInfiniteQuery } from 'react-query';
+import { useScrollToTop } from '@react-navigation/native';
 import { ActivityIndicator, FlatList, RefreshControl } from 'react-native';
 
-import { Flex, Typography, Wrapper } from 'src/components';
 import { IS_IOS } from 'src/constants/constants';
-import { getPlanets } from 'src/services/api/planets';
+import { getVehicles } from 'src/services/api/vehicles';
+import { Flex, Typography, Wrapper } from 'src/components';
 
-import { PlanetView } from './views';
+import { VehicleView } from './views';
 
-const Planets: React.FC = () => {
+const Vehicles: React.FC = () => {
     const ref = useRef(null);
     useScrollToTop(ref);
 
     const { data, fetchNextPage, hasNextPage, isLoading, isRefetching, refetch } = useInfiniteQuery(
-        'planets',
-        getPlanets,
+        'vehicles',
+        getVehicles,
         {
             getNextPageParam: (lastPage) => {
                 return lastPage.next;
@@ -37,7 +37,7 @@ const Planets: React.FC = () => {
                 showsVerticalScrollIndicator={false}
                 onEndReached={() => hasNextPage && fetchNextPage()}
                 keyExtractor={(i, index) => String(index)}
-                renderItem={({ item }) => <PlanetView planets={item.results} />}
+                renderItem={({ item }) => <VehicleView vehicles={item.results} />}
                 refreshControl={<RefreshControl refreshing={isRefetching} onRefresh={() => refetch()} />}
             />
         );
@@ -46,7 +46,7 @@ const Planets: React.FC = () => {
     return (
         <Wrapper>
             <Flex paddingString="10px">
-                <Typography type="h1">Planets</Typography>
+                <Typography type="h1">Vehicles</Typography>
             </Flex>
             {isLoading ? <ActivityIndicator /> : <Flex marginString={`0 0 ${IS_IOS ? 100 : 133}px 0`}>{dataList}</Flex>}
             {!hasNextPage && !isLoading && (
@@ -58,4 +58,4 @@ const Planets: React.FC = () => {
     );
 };
 
-export default Planets;
+export default Vehicles;
