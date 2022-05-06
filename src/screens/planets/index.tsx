@@ -1,21 +1,21 @@
 import React, { useMemo, useRef } from 'react';
-import { useInfiniteQuery } from 'react-query';
 import { useScrollToTop } from '@react-navigation/native';
+import { useInfiniteQuery } from 'react-query';
 import { ActivityIndicator, FlatList, RefreshControl } from 'react-native';
 
-import { IS_IOS } from 'src/constants/constants';
 import { Flex, Typography, Wrapper } from 'src/components';
-import { getCharacters } from 'src/services/api/characters';
+import { IS_IOS } from 'src/constants/constants';
+import { getPlanets } from 'src/services/api/planets';
 
-import { CharacterView } from './views';
+import { PlanetView } from './views';
 
-const Main = () => {
+const Planets: React.FC = () => {
     const ref = useRef(null);
-
     useScrollToTop(ref);
+
     const { data, fetchNextPage, hasNextPage, isLoading, isRefetching, refetch } = useInfiniteQuery(
         'exampleState',
-        getCharacters,
+        getPlanets,
         {
             getNextPageParam: (lastPage) => {
                 return lastPage.next;
@@ -33,11 +33,11 @@ const Main = () => {
                 data={data?.pages}
                 maxToRenderPerBatch={10}
                 onEndReachedThreshold={0.4}
-                // removeClippedSubviews={true}
+                removeClippedSubviews={true}
                 showsVerticalScrollIndicator={false}
                 onEndReached={() => hasNextPage && fetchNextPage()}
                 keyExtractor={(i, index) => String(index)}
-                renderItem={({ item }) => <CharacterView characters={item.results} />}
+                renderItem={({ item }) => <PlanetView planets={item.results} />}
                 refreshControl={<RefreshControl refreshing={isRefetching} onRefresh={() => refetch()} />}
             />
         );
@@ -46,7 +46,7 @@ const Main = () => {
     return (
         <Wrapper>
             <Flex paddingString="10px">
-                <Typography type="h1">Characters</Typography>
+                <Typography type="h1">Planets</Typography>
             </Flex>
             {isLoading ? <ActivityIndicator /> : <Flex marginString={`0 0 ${IS_IOS ? 100 : 133}px 0`}>{dataList}</Flex>}
             {!hasNextPage && !isLoading && (
@@ -58,4 +58,4 @@ const Main = () => {
     );
 };
 
-export default Main;
+export default Planets;

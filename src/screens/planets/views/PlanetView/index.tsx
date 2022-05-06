@@ -3,23 +3,23 @@ import { FlatList } from 'react-native';
 
 import { Flex } from 'src/components';
 
-import { StarshipsViewProps } from '../../types';
-import { StarshipRenderer } from '../StarshipRenderer';
+import { PlanetRenderer } from '../PlanetRenderer';
+import { Planet } from '../../types';
 
-export const StarshipsView: React.FC<StarshipsViewProps> = ({ starships }) => {
+export const PlanetView: React.FC<{ planets: Planet[] }> = ({ planets }) => {
     const dataList = useMemo(() => {
         return (
             <FlatList
-                data={starships}
+                data={planets}
                 removeClippedSubviews={true}
                 showsVerticalScrollIndicator={false}
                 keyExtractor={(i, index) => String(index)}
                 renderItem={({ item }) => {
-                    return <StarshipRenderer {...item} />;
+                    return <PlanetRenderer {...item} />;
                 }}
             />
         );
-    }, [starships]);
+    }, [planets]);
 
     return <Flex>{dataList}</Flex>;
 };

@@ -12,8 +12,7 @@ const ImageFallback: React.FC<ImageFallbackProps> = ({ imageUri, fallbackUri, re
             setIsValid(res.status === 200);
             setLoading(false);
         });
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    }, [imageUri]);
 
     if (loading || !isValid) {
         return fallbackUri ? <Image style={fallbackStyles} source={{ uri: fallbackUri }} /> : null;

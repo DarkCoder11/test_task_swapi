@@ -6,3 +6,4 @@ export { default as ImageFallback } from './shared/ImageFallback';
 
 // Views
 export { default as Wrapper } from './views/Wrapper';
+export { default as RenderStat } from './views/RenderStat';

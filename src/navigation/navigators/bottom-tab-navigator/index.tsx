@@ -4,21 +4,22 @@ import { useTheme } from 'styled-components/native';
 import { useNavigation } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
-import { IS_IOS } from 'src/constants/constants';
-import { Home, SpaceshipIcon } from 'src/assets/icons';
+import { DarthVaderIcon, PlanetIcon, SpaceshipIcon } from 'src/assets/icons';
 
 import { styles } from './styles';
 
 import MainScreenNavigator from '../main-screen-navigator';
 import StarshipsNavigator from '../starships-screen-navigator';
+import PlanetsScreenNavigator from '../planets-screen-navigator';
 import { NavigatorRoutes, ScreenRoutes } from '../../routes';
 
 const Tab = createBottomTabNavigator();
 
 const getTabIconsMapping = (route: NavigatorRoutes) => {
     const iconMap: { [key in NavigatorRoutes]?: () => any } = {
-        [NavigatorRoutes.Main]: () => Home,
+        [NavigatorRoutes.Main]: () => DarthVaderIcon,
         [NavigatorRoutes.Starships]: () => SpaceshipIcon,
+        [NavigatorRoutes.Planets]: () => PlanetIcon,
     };
     return iconMap[route]?.();
 };
@@ -99,6 +100,7 @@ const BottomTabNavigator = () => {
         >
             <Tab.Screen name={NavigatorRoutes.Main} component={MainScreenNavigator} />
             <Tab.Screen name={NavigatorRoutes.Starships} component={StarshipsNavigator} />
+            <Tab.Screen name={NavigatorRoutes.Planets} component={PlanetsScreenNavigator} />
         </Tab.Navigator>
     );
 };
