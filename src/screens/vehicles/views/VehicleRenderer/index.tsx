@@ -3,12 +3,12 @@ import { View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { useQuery } from 'react-query';
 
-import { ScreenRoutes } from 'src/navigation/routes';
-import { FALLBACK_IMAGE_URI } from 'src/constants/constants';
 import { getVehicleImageUrl } from 'src/utils';
+import { ScreenRoutes } from 'src/navigation/routes';
+import { getVehicleById } from 'src/services/api/vehicles';
+import { FALLBACK_IMAGE_URI } from 'src/constants/constants';
 import { Button, Flex, ImageFallback, RenderStat, Typography } from 'src/components';
 import { VehiclesScreenNavigatorStack } from 'src/navigation/navigators/vehicles-screen-navigator/types';
-import { getVehicleById } from 'src/services/api/vehicles';
 
 import { styles, PlanetWrapper } from './styles';
 
@@ -25,18 +25,13 @@ export const VehicleRenderer = ({ id }: { id: string }) => {
 
     const infoList = [
         {
-            name: 'Cargo Capacity',
+            name: 'Cargo',
             stat: vehicle?.cargo_capacity,
             symbol: 'V',
         },
         {
             name: 'Crew',
             stat: vehicle?.crew,
-        },
-        {
-            name: 'Class',
-            stat: vehicle?.vehicle_class,
-            width: '170px',
         },
         {
             name: 'Max Speed',
@@ -47,24 +42,19 @@ export const VehicleRenderer = ({ id }: { id: string }) => {
 
     const infoRenderer = infoList.map((item) => (
         <View key={item.name}>
-            <RenderStat
-                title={item.name}
-                stat={item.stat}
-                symbol={item.symbol && item.symbol}
-                width={item.width && item.width}
-            />
+            <RenderStat title={item.name} stat={item.stat} symbol={item.symbol && item.symbol} />
         </View>
     ));
 
     return (
-        <PlanetWrapper>
+        <>
             {!isLoading && (
-                <>
+                <PlanetWrapper>
                     <Button onPress={navigateToVehicle}>
                         <ImageFallback
                             imageUri={uri}
                             style={styles.img}
-                            resizeMode="contain"
+                            resizeMode="cover"
                             fallbackStyles={styles.img}
                             fallbackUri={FALLBACK_IMAGE_URI}
                         />
@@ -77,8 +67,8 @@ export const VehicleRenderer = ({ id }: { id: string }) => {
                         </Button>
                         {infoRenderer}
                     </Flex>
-                </>
+                </PlanetWrapper>
             )}
-        </PlanetWrapper>
+        </>
     );
 };

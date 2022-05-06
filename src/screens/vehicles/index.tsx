@@ -48,7 +48,7 @@ const Vehicles: React.FC = () => {
             <Flex paddingString="10px">
                 <Typography type="h1">Vehicles</Typography>
             </Flex>
-            {isLoading ? <ActivityIndicator /> : <Flex marginString={`0 0 ${IS_IOS ? 100 : 133}px 0`}>{dataList}</Flex>}
+            {isLoading ? <ActivityIndicator /> : <Flex marginString={`0 0 ${IS_IOS ? 100 : 120}px 0`}>{dataList}</Flex>}
             {!hasNextPage && !isLoading && (
                 <Typography type="label" textAlign="center">
                     You can't load more

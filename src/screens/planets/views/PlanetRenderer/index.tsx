@@ -29,16 +29,6 @@ export const PlanetRenderer = ({ id }: { id: string }) => {
             stat: String(convertNumToReadableStr(planet?.population)),
         },
         {
-            name: 'Climate',
-            stat: planet?.climate,
-            width: '160px',
-        },
-        {
-            name: 'Terrain',
-            stat: planet?.terrain,
-            width: '160px',
-        },
-        {
             name: 'Suface Water',
             stat: planet?.surface_water,
             symbol: '%',
@@ -47,12 +37,7 @@ export const PlanetRenderer = ({ id }: { id: string }) => {
 
     const infoRenderer = infoList.map((item) => (
         <View key={item.name}>
-            <RenderStat
-                title={item.name}
-                stat={item.stat}
-                symbol={item.symbol && item.symbol}
-                width={item.width && item.width}
-            />
+            <RenderStat title={item.name} stat={item.stat} symbol={item.symbol && item.symbol} />
         </View>
     ));
 

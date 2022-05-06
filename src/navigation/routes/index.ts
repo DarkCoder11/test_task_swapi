@@ -6,6 +6,7 @@ export enum ScreenRoutes {
     Planets = 'Planets',
     Vehicles = 'Vehicles',
     Vehicle = 'Vehicle',
+    Character = 'Character',
 }
 
 export enum NavigatorRoutes {

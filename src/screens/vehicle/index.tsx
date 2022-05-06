@@ -36,7 +36,7 @@ const Vehicle: React.FC<VehicleProps> = ({ route }) => {
         },
 
         {
-            title: 'Cargo Capacity',
+            title: 'Cargo',
             stat: data?.cargo_capacity,
             symbol: 'v',
         },
