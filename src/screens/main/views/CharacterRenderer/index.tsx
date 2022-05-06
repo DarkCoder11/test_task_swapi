@@ -1,31 +1,49 @@
-import React from 'react';
-import { useNavigation } from '@react-navigation/native';
-import { useQuery } from 'react-query';
+import React, { useMemo } from 'react';
+import { View } from 'react-native';
 
-import { ImageFallback, Button, Flex, Typography } from 'src/components';
-import { getNumFromStr, getCharacterImageUrl } from 'src/utils';
-import { FALLBACK_IMAGE_URI } from 'src/constants/constants';
-import { ScreenRoutes } from 'src/navigation/routes';
-import { CharacterType } from 'src/screens/main/types';
 import { FemaleIcon, MaleIcon } from 'src/assets/icons';
-import { getPlanetById } from 'src/services/api/planets';
-import { MainScreenNavigatorStack } from 'src/navigation/navigators/main-screen-navigator/types';
+import { CharacterType } from 'src/screens/main/types';
+import { FALLBACK_IMAGE_URI } from 'src/constants/constants';
+import { getNumFromStr, getCharacterImageUrl } from 'src/utils';
+import { ImageFallback, Flex, Typography, RenderStat } from 'src/components';
 
 import { styles, CharacterWrapper } from './styles';
 
 export const CharacterRenderer = (character: CharacterType) => {
-    const navigation = useNavigation<MainScreenNavigatorStack>();
-
     const id = getNumFromStr(character.url);
     const uri = getCharacterImageUrl(id);
 
-    const planetId = getNumFromStr(character.homeworld);
+    const dataList = useMemo(() => {
+        return [
+            {
+                title: 'Height',
+                stat: character?.height,
+                symbol: 'cm',
+            },
+            {
+                title: 'Mass',
+                stat: character?.mass,
+                symbol: 'kg',
+            },
+            {
+                title: 'Hair Color',
+                stat: character?.hair_color,
+            },
+            {
+                title: 'Skin Color',
+                stat: character?.skin_color,
+            },
+        ];
+    }, [character?.hair_color, character?.height, character?.mass, character?.skin_color]);
 
-    const { data: planet, isLoading } = useQuery(planetId, getPlanetById);
-
-    const navigateToPlanet = () => {
-        navigation.navigate(ScreenRoutes.Planet, { planetId });
-    };
+    const dataListRenderer = dataList.map(
+        (item) =>
+            item.stat && (
+                <View key={item.title}>
+                    <RenderStat textType="h3" stat={item.stat} title={item.title} symbol={item.symbol && item.symbol} />
+                </View>
+            ),
+    );
 
     return (
         <CharacterWrapper>
@@ -47,25 +65,7 @@ export const CharacterRenderer = (character: CharacterType) => {
                         <Typography type="bodyLarge">{character.name}</Typography>
                     </Flex>
                 </Flex>
-                <Flex marginString="0 0 0 5px">
-                    <Typography type="body">Height: {character.height}cm</Typography>
-                    <Typography type="body">Mass: {character.mass}kg</Typography>
-                    <Typography type="body" textTransform="capitalize">
-                        Hair Color: {character.hair_color}
-                    </Typography>
-                    <Typography type="body" textTransform="capitalize">
-                        Skin Color: {character.skin_color}
-                    </Typography>
-                    <Button onPress={navigateToPlanet}>
-                        <Typography
-                            textStyle={{ textDecorationLine: 'underline' }}
-                            type="body"
-                            textTransform="capitalize"
-                        >
-                            Home World: {!isLoading && planet?.name}
-                        </Typography>
-                    </Button>
-                </Flex>
+                {dataListRenderer}
             </Flex>
         </CharacterWrapper>
     );

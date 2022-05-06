@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
-import { Flex, ImageFallback, Typography, Button } from 'src/components';
+import { Flex, ImageFallback, Typography, Button, RenderStat } from 'src/components';
 import { getNumFromStr, getStarshipImageUrl } from 'src/utils';
 import { FALLBACK_IMAGE_URI, SOUND_SPEED } from 'src/constants/constants';
 import { ScreenRoutes } from 'src/navigation/routes';
@@ -36,15 +36,36 @@ export const StarshipRenderer = (starship: StarshipsParams) => {
     const id = getNumFromStr(starship.url);
     const uri = getStarshipImageUrl(id);
 
-    const maxSpeed =
-        starship.max_atmosphering_speed !== 'n/a'
-            ? `${Number(starship.max_atmosphering_speed) * SOUND_SPEED} km/h`
-            : 'n/a';
-
     const navigateStarship = () => {
         navigation.navigate(ScreenRoutes.Starship, { id, uri });
     };
 
+    const dataList = useMemo(() => {
+        return [
+            {
+                title: 'Crew',
+                stat: starship?.crew,
+            },
+            {
+                title: 'Class',
+                stat: starship?.starship_class,
+            },
+            {
+                title: 'Max speed',
+                stat: starship?.max_atmosphering_speed,
+                symbol: 'C',
+            },
+        ];
+    }, [starship?.crew, starship?.max_atmosphering_speed, starship?.starship_class]);
+
+    const dataListRenderer = dataList.map(
+        (item) =>
+            item.stat && (
+                <View key={item.title}>
+                    <RenderStat textType="h3" stat={item.stat} title={item.title} symbol={item.symbol && item.symbol} />
+                </View>
+            ),
+    );
     return (
         <View>
             <StarshipCard>
@@ -60,11 +81,7 @@ export const StarshipRenderer = (starship: StarshipsParams) => {
                         fallbackUri={FALLBACK_IMAGE_URI}
                     />
                 </Button>
-                <Flex paddingString="10px 0 10px 0">
-                    <Typography>Crew: {starship.crew}</Typography>
-                    <Typography textTransform="capitalize">Class: {starship.starship_class}</Typography>
-                    <Typography>Max Speed: {maxSpeed} </Typography>
-                </Flex>
+                {dataListRenderer}
             </StarshipCard>
         </View>
     );

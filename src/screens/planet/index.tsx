@@ -1,22 +1,16 @@
-import React from 'react';
-import { useNavigation } from '@react-navigation/native';
+import React, { useMemo } from 'react';
+import { View } from 'react-native';
 import { useQuery } from 'react-query';
+import { useNavigation } from '@react-navigation/native';
 
 import { ChevronBack } from 'src/assets/icons';
-import { Button, Flex, ImageFallback, Typography, Wrapper } from 'src/components';
 import { getPlanetById } from 'src/services/api/planets';
 import { FALLBACK_IMAGE_URI } from 'src/constants/constants';
 import { convertNumToReadableStr, getPlanetImageUrl } from 'src/utils';
+import { Button, Flex, ImageFallback, RenderStat, Typography, Wrapper } from 'src/components';
 
 import { styles } from './styles';
 import { PlanetProps } from './types';
-
-const checkUnknown = (info: string, title: string, symbol: string) => {
-    if (info === 'unknown') {
-        return null;
-    }
-    return `${title}: ${info} ${symbol}`;
-};
 
 const Planet: React.FC<PlanetProps> = ({ route }) => {
     const navigation = useNavigation();
@@ -30,7 +24,65 @@ const Planet: React.FC<PlanetProps> = ({ route }) => {
         navigation.goBack();
     };
 
-    console.log(data, 'data');
+    const dataList = useMemo(() => {
+        return [
+            {
+                title: 'Climate',
+                stat: data?.climate,
+            },
+            {
+                title: 'Diameter',
+                stat: data?.diameter,
+                symbol: 'm',
+            },
+            {
+                title: 'Gravity',
+                stat: data?.gravity,
+                symbol: 'm',
+            },
+            {
+                title: 'Orbital period',
+                stat: data?.orbital_period,
+                symbol: 'hrs',
+            },
+            {
+                title: 'Population',
+                stat: String(convertNumToReadableStr(data?.population)),
+            },
+            {
+                title: 'Rotation period',
+                stat: data?.rotation_period,
+                symbol: 'hr',
+            },
+            {
+                title: 'Surface water',
+                stat: data?.surface_water,
+                symbol: '%',
+            },
+            {
+                title: 'Terrain',
+                stat: data?.terrain,
+            },
+        ];
+    }, [
+        data?.climate,
+        data?.diameter,
+        data?.gravity,
+        data?.orbital_period,
+        data?.population,
+        data?.rotation_period,
+        data?.surface_water,
+        data?.terrain,
+    ]);
+
+    const dataListRendered = dataList.map(
+        (item) =>
+            item.stat && (
+                <View key={item.title}>
+                    <RenderStat stat={item.stat} title={item.title} symbol={item.symbol && item.symbol} />
+                </View>
+            ),
+    );
 
     return (
         <Wrapper>
@@ -50,35 +102,10 @@ const Planet: React.FC<PlanetProps> = ({ route }) => {
                             imageUri={uri}
                             resizeMode="cover"
                             style={styles.img}
-                            fallbackUri={FALLBACK_IMAGE_URI}
                             fallbackStyles={styles.img}
+                            fallbackUri={FALLBACK_IMAGE_URI}
                         />
-                        <Flex marginString="10px 0">
-                            <Typography fontFamily="semiBold" type="body" textTransform="capitalize">
-                                Climate: {data.climate}
-                            </Typography>
-                            <Typography fontFamily="semiBold" type="body">
-                                {checkUnknown(data.diameter, 'Diameter', 'm')}
-                            </Typography>
-                            <Typography fontFamily="semiBold" type="body" textTransform="capitalize">
-                                Gravity: {data.gravity}
-                            </Typography>
-                            <Typography fontFamily="semiBold" type="body">
-                                {checkUnknown(data.orbital_period, 'Orbital period', 'hr')}
-                            </Typography>
-                            <Typography fontFamily="semiBold" type="body">
-                                {checkUnknown(String(convertNumToReadableStr(data.population)), 'Population', '')}
-                            </Typography>
-                            <Typography fontFamily="semiBold" type="body">
-                                {checkUnknown(data.rotation_period, 'Rotation period', 'hr')}
-                            </Typography>
-                            <Typography fontFamily="semiBold" type="body">
-                                {checkUnknown(data.surface_water, 'Surface water', '%')}
-                            </Typography>
-                            <Typography fontFamily="semiBold" type="body" textTransform="capitalize">
-                                Terrain: {data.terrain}
-                            </Typography>
-                        </Flex>
+                        {dataListRendered}
                     </Flex>
                 </Flex>
             )}

@@ -3,22 +3,14 @@ import styled from 'styled-components/native';
 
 export const PlanetWrapper = styled.View`
   margin: 15px 10px 15px 10px;
-  border-width: 2px;
-  border-radius: 8px;
-  border-color: ${({ theme }) => theme.colors.white};
   flex-direction: row;
 `;
 
 export const styles = StyleSheet.create({
     img: {
-        height: 150,
-        width: 150,
+        width: 160,
+        height: 170,
         borderTopLeftRadius: 7,
         borderBottomLeftRadius: 7,
-    },
-    planetImage: {
-        height: 300,
-        width: '100%',
-        borderRadius: 7,
     },
 });

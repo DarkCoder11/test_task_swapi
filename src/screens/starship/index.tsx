@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { useQuery } from 'react-query';
-import { ActivityIndicator } from 'react-native';
+import { ActivityIndicator, View } from 'react-native';
 
-import { Button, Flex, ImageFallback, Typography, Wrapper } from 'src/components';
+import { Button, Flex, ImageFallback, RenderStat, Typography, Wrapper } from 'src/components';
 import { ChevronBack } from 'src/assets/icons';
 import { getStarshipById } from 'src/services/api/starships';
 import { FALLBACK_IMAGE_URI } from 'src/constants/constants';
@@ -22,61 +22,76 @@ const Starship: React.FC<StarshipProps> = ({ route }) => {
         navigation.goBack();
     };
 
-    const infoList = [
-        {
-            name: 'Model',
-            info: data?.model,
-        },
-        {
-            name: 'Manufacturer',
-            info: data?.manufacturer,
-        },
-        {
-            name: 'Class',
-            info: data?.starship_class,
-        },
-        {
-            name: 'MGLT',
-            info: data?.MGLT,
-        },
-        {
-            name: 'Passengers',
-            info: data?.passengers,
-        },
-        {
-            name: 'Atmosphering speed',
-            info: data?.max_atmosphering_speed,
-        },
-        {
-            name: 'Crew',
-            info: data?.crew,
-        },
-        {
-            name: 'Cost',
-            info: data?.cost_in_credits,
-        },
-        {
-            name: 'Cargo capacity',
-            info: data?.cargo_capacity,
-        },
-        {
-            name: 'Hyperdrive rating',
-            info: data?.hyperdrive_rating,
-        },
-        {
-            name: 'Consumables',
-            info: data?.consumables,
-        },
-    ];
+    const infoList = useMemo(
+        () => [
+            {
+                name: 'Model',
+                stat: data?.model,
+            },
+            {
+                name: 'Manufacturer',
+                stat: data?.manufacturer,
+            },
+            {
+                name: 'Class',
+                stat: data?.starship_class,
+            },
+            {
+                name: 'MGLT',
+                stat: data?.MGLT,
+            },
+            {
+                name: 'Passengers',
+                stat: data?.passengers,
+            },
+            {
+                name: 'Atmosphering speed',
+                stat: data?.max_atmosphering_speed,
+                symbol: 'C',
+            },
+            {
+                name: 'Crew',
+                stat: data?.crew,
+            },
+            {
+                name: 'Cost',
+                stat: data?.cost_in_credits,
+                symbol: '$',
+            },
+            {
+                name: 'Cargo capacity',
+                stat: data?.cargo_capacity,
+                symbol: 'V',
+            },
+            {
+                name: 'Hyperdrive rating',
+                stat: data?.hyperdrive_rating,
+            },
+            {
+                name: 'Consumables',
+                stat: data?.consumables,
+            },
+        ],
+        [
+            data?.MGLT,
+            data?.cargo_capacity,
+            data?.consumables,
+            data?.cost_in_credits,
+            data?.crew,
+            data?.hyperdrive_rating,
+            data?.manufacturer,
+            data?.max_atmosphering_speed,
+            data?.model,
+            data?.passengers,
+            data?.starship_class,
+        ],
+    );
 
     const infoRenderer = infoList.map((item) => {
         return (
-            <Flex key={item.name} flexDirection="row" alignItems="center">
-                <Typography fontFamily="semiBold" type="body">
-                    {item.name}:
-                </Typography>
-                <Typography type="body"> {item.info}</Typography>
-            </Flex>
+            <View key={item.name}>
+                <RenderStat title={item.name} stat={item.stat} symbol={item.symbol && item.symbol} />
+            </View>
         );
     });
 

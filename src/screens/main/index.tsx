@@ -33,7 +33,7 @@ const Main = () => {
                 data={data?.pages}
                 maxToRenderPerBatch={10}
                 onEndReachedThreshold={0.4}
-                removeClippedSubviews={true}
+                // removeClippedSubviews={true}
                 showsVerticalScrollIndicator={false}
                 onEndReached={() => hasNextPage && fetchNextPage()}
                 keyExtractor={(i, index) => String(index)}
