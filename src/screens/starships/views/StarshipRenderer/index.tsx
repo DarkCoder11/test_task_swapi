@@ -4,7 +4,6 @@ import { useNavigation } from '@react-navigation/native';
 
 import { Flex, ImageFallback, Typography, Button } from 'src/components';
 import { getNumFromStr, getStarshipImageUrl } from 'src/utils';
-import { useImageColors } from 'src/hooks';
 import { FALLBACK_IMAGE_URI, SOUND_SPEED } from 'src/constants/constants';
 import { ScreenRoutes } from 'src/navigation/routes';
 import { StarshipScreenScreenNavigatorStack } from 'src/navigation/navigators/starships-screen-navigator/types';
@@ -37,8 +36,6 @@ export const StarshipRenderer = (starship: StarshipsParams) => {
     const id = getNumFromStr(starship.url);
     const uri = getStarshipImageUrl(id);
 
-    const { colors, picLoading } = useImageColors(uri);
-
     const maxSpeed =
         starship.max_atmosphering_speed !== 'n/a'
             ? `${Number(starship.max_atmosphering_speed) * SOUND_SPEED} km/h`
@@ -50,7 +47,7 @@ export const StarshipRenderer = (starship: StarshipsParams) => {
 
     return (
         <View>
-            <StarshipCard colors={colors} picLoading={picLoading}>
+            <StarshipCard>
                 <Button onPress={navigateStarship}>
                     <Flex paddingString="10px 0 10px 0">{modelAndNameMatch(starship.name, starship.model)}</Flex>
                 </Button>

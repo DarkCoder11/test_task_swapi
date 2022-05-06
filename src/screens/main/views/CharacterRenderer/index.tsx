@@ -62,7 +62,7 @@ export const CharacterRenderer = (character: CharacterType) => {
                             type="body"
                             textTransform="capitalize"
                         >
-                            Home World: {!isLoading && planet.name}
+                            Home World: {!isLoading && planet?.name}
                         </Typography>
                     </Button>
                 </Flex>
