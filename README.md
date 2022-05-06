@@ -1,7 +1,7 @@
 <h1>Test task with Star wars API</h1>
 <hr><p>To use the application clone it or use the zip file</p><h2>How to start with the app</h2>
 <hr><ul>
-<li>yarn install</li>
+<li><code>yarn install</code></li>
 <li>If you do not have <code>cocoapods</code>
 install it via <code>sudo gem install cocoapods</code></li>
 <li><code>cd ios &amp;&amp; pod install &amp;&amp; cd ..</code></li>
