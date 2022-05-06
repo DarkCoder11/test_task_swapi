@@ -25,18 +25,13 @@ export const VehicleRenderer = ({ id }: { id: string }) => {
 
     const infoList = [
         {
-            name: 'Cargo Capacity',
+            name: 'Cargo',
             stat: vehicle?.cargo_capacity,
             symbol: 'V',
         },
         {
             name: 'Crew',
             stat: vehicle?.crew,
-        },
-        {
-            name: 'Class',
-            stat: vehicle?.vehicle_class,
-            width: '170px',
         },
         {
             name: 'Max Speed',
@@ -47,12 +42,7 @@ export const VehicleRenderer = ({ id }: { id: string }) => {
 
     const infoRenderer = infoList.map((item) => (
         <View key={item.name}>
-            <RenderStat
-                title={item.name}
-                stat={item.stat}
-                symbol={item.symbol && item.symbol}
-                width={item.width && item.width}
-            />
+            <RenderStat title={item.name} stat={item.stat} symbol={item.symbol && item.symbol} />
         </View>
     ));
 
@@ -64,7 +54,7 @@ export const VehicleRenderer = ({ id }: { id: string }) => {
                         <ImageFallback
                             imageUri={uri}
                             style={styles.img}
-                            resizeMode="contain"
+                            resizeMode="cover"
                             fallbackStyles={styles.img}
                             fallbackUri={FALLBACK_IMAGE_URI}
                         />

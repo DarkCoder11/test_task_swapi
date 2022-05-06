@@ -58,7 +58,7 @@ const Starship: React.FC<StarshipProps> = ({ route }) => {
             symbol: '$',
         },
         {
-            name: 'Cargo capacity',
+            name: 'Cargo',
             stat: data?.cargo_capacity,
             symbol: 'V',
         },

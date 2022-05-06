@@ -61,6 +61,7 @@ const Planet: React.FC<PlanetProps> = ({ route }) => {
         {
             title: 'Terrain',
             stat: data?.terrain,
+            width: '230px',
         },
     ];
 
@@ -68,7 +69,12 @@ const Planet: React.FC<PlanetProps> = ({ route }) => {
         (item) =>
             item.stat && (
                 <View key={item.title}>
-                    <RenderStat stat={item.stat} title={item.title} symbol={item.symbol && item.symbol} />
+                    <RenderStat
+                        stat={item.stat}
+                        title={item.title}
+                        width={item.width && item.width}
+                        symbol={item.symbol && item.symbol}
+                    />
                 </View>
             ),
     );
